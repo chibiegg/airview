@@ -1,0 +1,29 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="jquery.min.js"></script>
+  <title>Air View</title>
+
+  <script type="application/javascript">
+    var lastFile = "";
+    setInterval(function(){
+      $.get("/latest", function(data){
+        if(lastFile != data){
+          console.log(data);
+          var image = new Image();
+          image.onload = function(){
+            $('body').css('background-size', 'cover');
+            $('body').css('background-image', 'url(' + data + ')');
+          };
+          image.src = data;
+          lastFile = data;
+        }
+      });
+
+    }, 1000);
+
+  </script>
+</head>
+<body>
+</body>
+</html>
