@@ -4,6 +4,7 @@
   <script src="jquery.min.js"></script>
   <title>Air View</title>
 
+  <link rel="stylesheet" type="text/css" href="style.css" media="screen">
   <script type="application/javascript">
     var lastFile = "";
     setInterval(function(){
@@ -19,9 +20,16 @@
           lastFile = data;
         }
       });
-
     }, 1000);
-
+    $(document).on('keypress', 'body', function(e) {
+      console.log('===== keypress ====='); // 2番目に実行される
+      console.log(e);
+      console.log(e.keyCode);
+      console.log(e.which);
+      if(e.keyCode == 115){ // s
+        document.location = "/slideshow.html";
+      }
+    });
   </script>
 </head>
 <body>
