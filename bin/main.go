@@ -8,6 +8,8 @@ import (
         "io/ioutil"
         "path"
         "strings"
+        "encoding/json"
+        "sort"
 
         // "golang.org/x/net/websocket"
 
@@ -100,6 +102,30 @@ func main() {
   })
   mux.HandleFunc(pat.Get("/latest"), func(w http.ResponseWriter, r *http.Request) {
     w.Write([]byte("/downloads/" + latestFile))
+  })
+  mux.HandleFunc(pat.Get("/list"), func(w http.ResponseWriter, r *http.Request) {
+    w.Header().Set("Content-Type", "application/json")
+
+    files, err := ioutil.ReadDir("./downloads")
+    if err != nil {
+        logger.Error(err)
+    }
+
+    paths := make([]string, 0, len(files))
+
+    for _, file := range files {
+        if file.IsDir() {
+            continue
+        }
+        if strings.HasSuffix(strings.ToLower(file.Name()), "jpg") == false {
+          continue
+        }
+        paths = append(paths, "/downloads/" + file.Name())
+    }
+
+    sort.Strings(paths)
+    b, _ := json.Marshal(paths)
+    w.Write([]byte(b))
   })
   mux.HandleFunc(pat.Post("/notify/"), notify)
   mux.Handle(pat.Get("/downloads/*"), http.StripPrefix("/downloads", http.FileServer(http.Dir("downloads"))))

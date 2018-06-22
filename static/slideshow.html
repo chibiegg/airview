@@ -1,0 +1,39 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="jquery.min.js"></script>
+  <script src="jquery.bgswitcher.js"></script>
+  <title>Air View | Slideshow</title>
+
+  <link rel="stylesheet" type="text/css" href="style.css" media="screen">
+  <script type="application/javascript">
+    var totalDurationSec = 300;
+
+    $.get("/list", function(data){
+      var durationMsec = totalDurationSec*1000.0/data.length;
+      console.log(data);
+      console.log(durationMsec);
+
+      $.each(data, function(i, p){
+        $("body").append($("<img>").attr("src", p).attr("witdh", "0").attr("height", 0));
+      });
+
+      setTimeout(function(){
+        $('.bg-slider').bgSwitcher({
+          images: data, // 切替背景画像を指定
+          interval: durationMsec, // 背景画像を切り替える間隔を指定 3000=3秒
+          loop: false, // 切り替えを繰り返すか指定 true=繰り返す　false=繰り返さない
+          shuffle: false, // 背景画像の順番をシャッフルするか指定 true=する　false=しない
+          effect: "fade", // エフェクトの種類をfade,blind,clip,slide,drop,hideから指定
+          duration: 500, // エフェクトの時間を指定します。
+          easing: "swing" // エフェクトのイージングをlinear,swingから指定
+        });
+      }, 10000);
+    });
+
+  </script>
+</head>
+<body>
+  <div id="show" class="photo bg-slider"></div>
+</body>
+</html>
