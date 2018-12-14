@@ -1,5 +1,5 @@
-local PHOTO_TARGET_PATH = "/DCIM/100__TSB"
-local NOTIFY_URL = "http://192.168.0.11:8000/notify/"
+local PHOTO_TARGET_PATH = "/DCIM/101MSDCF"              -- 写真が記録されるディレクトリを指定する
+local NOTIFY_URL = "http://192.168.0.12:8000/notify/"   -- サーバのアドレスに設定する
 
 function find_latest_path(basedir)
     local max_mod = 0
@@ -34,7 +34,7 @@ end
 filename = find_latest_path(PHOTO_TARGET_PATH)
 local current_number = get_file_number(filename) - 1
 
-while true
+while true do
 
   for file in lfs.dir(PHOTO_TARGET_PATH) do
       local path = PHOTO_TARGET_PATH.."/"..file
@@ -46,5 +46,5 @@ while true
       end
   end
 
-  sleep(1000)
-do
+  sleep(500)
+end

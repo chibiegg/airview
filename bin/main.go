@@ -75,6 +75,7 @@ func download_loop(q *queue.Queue) {
 
 // serveWs handles websocket requests from the peer.
 func serveWs(w http.ResponseWriter, r *http.Request) {
+  // TODO: WebSocketでの通知を実装する
 }
 
 func main() {
@@ -94,7 +95,7 @@ func main() {
 
   go download_loop(q)
 
-  latestFile = "5D4_6972.JPG"
+  latestFile = "Initial.JPG"
 
   mux := goji.NewMux()
   mux.HandleFunc(pat.Get("/ws"), func(w http.ResponseWriter, r *http.Request) {
